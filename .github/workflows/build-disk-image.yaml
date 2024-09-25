@@ -85,7 +85,6 @@ jobs:
 
       - uses: actions/download-artifact@main
         with:
-          name: [nixos-x86_64, nixos-aarch64]
           path: .
           merge-multiple: true
 
