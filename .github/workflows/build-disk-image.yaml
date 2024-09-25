@@ -1,9 +1,6 @@
 name: Build NixOS disk image
 
 on:
-  push:
-    tags:
-      - "release-*"
   workflow_dispatch:
 
 jobs:
