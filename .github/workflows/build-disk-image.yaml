@@ -93,5 +93,5 @@ jobs:
           token: ${{ github.token }}
           tag_name: release-${{ steps.date-env.build_date }}
           name: release-${{ steps.date-env.build_date }}
-          files: [nixos-x86_64.zip, nixos-aarch64.zip]
+          files: ./{nixos-x86_64.zip,nixos-aarch64.zip}
           draft: true
