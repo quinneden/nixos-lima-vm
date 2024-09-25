@@ -1,31 +1,25 @@
-# Run NixOS on a Lima VM
-Heavily inspired from [patryk4815/ctftools](https://github.com/patryk4815/ctftools/tree/master/lima-vm)
+## NixOS Lima Builder
 
-## Generating the image
-On a linux machine or ubuntu lima vm for example:
+Forked from [kasuboski/nixos-lima](https://github.com/kasuboski/nixos-lima), still mostly identical,
+slight modification in the user configuration and lima runtime.
+Made to be used as a remote builder for nix-darwin.
 
+## How-to
+1. Build NixOS disk image from flake.
 ```bash
-# install nix
-sh <(curl -L https://nixos.org/nix/install) --daemon
-# enable kvm feature
-echo "system-features = nixos-test benchmark big-parallel kvm" >> /etc/nix/nix.conf
-reboot
-
-# build image
-nix --extra-experimental-features nix-command --extra-experimental-features flakes build .#packages.aarch64-linux.img
-cp $(readlink result)/nixos.img /tmp/lima/nixos-aarch64.img
+nix build .#packages.aarch64-linux.image
 ```
-
-On your mac:
-* Move `nixos-aarch64.img` under `imgs`
-
-## Running NixOS
+2. Once finished, execute ./copy.sh which will copy the image
+   from the Nix Store into ./img and chmod 644, and renames file
+   to match nix-builder.yaml.
 ```bash
-limactl start --name=default nixos.yaml
-
-lima
-# switch to this repo directory
-nixos-rebuild switch --flake .#nixos --use-remote-sudo
+./scripts/copy.sh
 ```
-
-
+3. Start Lima VM using configuration in nix-builder.yaml.
+```bash
+limactl start --name=nix-builder ./nix-builder.yaml
+```
+4. Execute vm shell and nixos-rebuild from this flake's nixosConfiguration.
+```bash
+nixos-rebuild switch --use-remote-sudo --flake github:quinneden/lima-nix-builder#nixosConfigurations.nixos
+```
