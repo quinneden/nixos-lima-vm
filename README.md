@@ -6,7 +6,11 @@ slight modification in the user configuration and lima runtime.
 ## How-to
 1. Build NixOS disk image from flake.
 ```bash
-nix build .#packages.aarch64-linux.image # or .#packages.x86_64-linux.image
+# aarch64-linux
+nix build .#packages.aarch64-linux.image
+
+# x86_64-linux
+nix build .#packages.x86_64-linux.image
 ```
 2. Once finished, execute ./copy.sh which will copy the image from the nix store
    into ./img and chmod 644, and renames file to match reference in nixos.yaml.

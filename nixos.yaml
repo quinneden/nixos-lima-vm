@@ -1,4 +1,5 @@
 arch: "aarch64"
+vmType: "vz"
 
 images:
 - location: "./img/lima-nixos-aarch64.img"
@@ -12,14 +13,16 @@ memory: "6GiB"
 mounts:
 - location: "~"
   writable: true
-  9p:
-    cache: "mmap"
 - location: "/tmp/lima"
   writable: true
-  9p:
-    cache: "mmap"
 
-mountType: "9p"
+mountType: "virtiofs"
+
+ssh:
+  localPort: 0
+
+networks:
+- vzNAT: true
 
 containerd:
   system: false
