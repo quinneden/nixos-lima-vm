@@ -22,13 +22,14 @@
   # Create system-specific outputs for lima systems
   let
     ful = flake-utils.lib;
+    username = "FIXME"; # Replace with real user
   in
     ful.eachSystem [ful.system.x86_64-linux ful.system.aarch64-linux] (system: let
       pkgs = import nixpkgs {inherit system;};
     in {
       packages = {
         img = nixos-generators.nixosGenerate {
-          inherit pkgs;
+          inherit pkgs username;
           modules = [
             lix-module.nixosModules.lixFromNixpkgs
             ./lima.nix
@@ -41,6 +42,7 @@
       nixosConfigurations.nixos = nixpkgs.lib.nixosSystem {
         system = "aarch64-linux"; # doesn't play nice with each system :shrug:
         specialArgs = attrs;
+        inherit username;
         modules = [
           lix-module.nixosModules.lixFromNixpkgs
           ./lima.nix

@@ -11,11 +11,10 @@
   ];
 
   nix = {
-    package = pkgs.lix;
     settings = {
       experimental-features = ["nix-command" "flakes"];
       auto-optimise-store = true;
-      trusted-users = ["builder" "root"];
+      trusted-users = ["@users" "root"];
       warn-dirty = false;
       system-features = ["nixos-test" "benchmark" "big-parallel" "kvm" "gccarch-armv8-a"];
       extra-substituters = [
@@ -26,6 +25,8 @@
       ];
     };
   };
+
+  networking.hostname = "lima-nixos";
 
   # ssh
   services.openssh = {

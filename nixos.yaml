@@ -21,9 +21,6 @@ mounts:
 
 mountType: "9p"
 
-ssh:
-  localPort: 22315
-
 containerd:
   system: false
   user: false

@@ -1,6 +1,7 @@
 {
   config,
   modulesPath,
+  username,
   pkgs,
   lib,
   ...
@@ -19,10 +20,10 @@
 
   programs.zsh.enable = true;
 
-  users.users.builder = {
+  users.users.${username} = {
     shell = "${pkgs.zsh}/bin/zsh";
     isNormalUser = true;
     group = "users";
-    home = "/home/builder.linux";
+    home = "/home/${username}.linux";
   };
 }
