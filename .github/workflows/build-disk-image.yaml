@@ -27,11 +27,11 @@ jobs:
           sudo apt-get install -y qemu-system-aarch64 qemu-efi binfmt-support qemu-user-static
           sudo mount -o remount,size=15G /run
 
-      - name: nix build .#packages.aarch64-linux.img
+      - name: nix build .#packages.aarch64-linux.image
         run: |
           sudo systemctl restart nix-daemon.service
           sudo systemctl daemon-reload
-          nix build -L .#packages.aarch64-linux.img
+          nix build -L .#packages.aarch64-linux.image
           cp $(readlink result)/nixos.img ./nixos-aarch64.img
           chmod 644 ./nixos-aarch64.img
 
@@ -56,11 +56,11 @@ jobs:
             trusted-users = *
             experimental-features = nix-command flakes
 
-      - name: nix build .#packages.x86_64-linux.img
+      - name: nix build .#packages.x86_64-linux.image
         run: |
           sudo mount -o remount,size=15G /run
           sudo systemctl restart nix-daemon.service
-          nix build -L .#packages.x86_64-linux.img
+          nix build -L .#packages.x86_64-linux.image
           cp $(readlink result)/nixos.img ./nixos-x86_64.img
           chmod 644 ./nixos-x86_64.img
 
