@@ -29,7 +29,8 @@
     in {
       packages = {
         image = nixos-generators.nixosGenerate {
-          inherit pkgs username;
+          inherit pkgs;
+          specialArgs = {inherit username;};
           modules = [
             lix-module.nixosModules.lixFromNixpkgs
             ./lima.nix
