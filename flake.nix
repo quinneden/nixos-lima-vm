@@ -28,7 +28,7 @@
       pkgs = import nixpkgs {inherit system;};
     in {
       packages = {
-        img = nixos-generators.nixosGenerate {
+        image = nixos-generators.nixosGenerate {
           inherit pkgs username;
           modules = [
             lix-module.nixosModules.lixFromNixpkgs
