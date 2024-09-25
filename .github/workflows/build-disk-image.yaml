@@ -12,7 +12,6 @@ jobs:
 
     permissions:
       contents: write
-      id-token: read
 
     steps:
       - uses: actions/checkout@main
@@ -47,7 +46,6 @@ jobs:
 
     permissions:
       contents: write
-      id-token: read
 
     steps:
       - uses: actions/checkout@main
