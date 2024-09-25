@@ -26,7 +26,7 @@
     };
   };
 
-  networking.hostname = "lima-nixos";
+  networking.hostName = "lima-nixos";
 
   # ssh
   services.openssh = {

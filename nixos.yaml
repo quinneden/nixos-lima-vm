@@ -1,9 +1,9 @@
 arch: "aarch64"
 
 images:
-- location: "./img/nixos-lima-aarch64.img"
+- location: "./img/lima-nixos-aarch64.img"
   arch: "aarch64"
-- location: "./img/nixos-lima-x86.img"
+- location: "./img/lima-nixos-x86_64.img"
   arch: "x86_64"
 
 cpus: 6

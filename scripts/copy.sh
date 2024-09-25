@@ -2,7 +2,7 @@
 
 set -e
 
-cd "$(dirname $0)/.."
+cd "$(dirname "$0")/.."
 
 RESULT=$(readlink result)
 
@@ -18,11 +18,13 @@ fi
 
 mkdir -p ./img
 
-if [[ -f ./img/lima-nixos-"${ARCH}".img]]; then
+if [[ -f ./img/lima-nixos-${ARCH}.img ]]; then
   echo "error: file exists... overwrite? [y/N]"
-  read -q || exit 1
+  read -rq || exit 1
 fi
 
 cp "${RESULT}"/nixos.img img/lima-nixos-"${ARCH}".img
-chmod 644 img/lima-nixos-"${ARCH}".img)
+chmod 644 img/lima-nixos-"${ARCH}".img
 echo "copied: img/lima-nixos-${ARCH}.img"
+
+unset ARCH RESULT
