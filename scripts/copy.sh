@@ -12,6 +12,17 @@ else
   ARCH="aarch64"
 fi
 
+confirm() {
+  while true; do
+    read -r -n 1 -p "${1:-Continue?} [y/n]: " REPLY
+    case $REPLY in
+      [yY]) echo ; return 0 ;;
+      [nN]) echo ; return 1 ;;
+      *) printf " \033[31m %s \n\033[0m" "invalid input"
+    esac
+  done
+}
+
 if [[ ! -d $RESULT ]]; then
   echo "error: symlink to nix store path not found, or store path does not exist"; exit 1
 fi
@@ -19,8 +30,9 @@ fi
 mkdir -p ./img
 
 if [[ -f ./img/lima-nixos-${ARCH}.img ]]; then
-  echo "error: file exists... overwrite? [y/N]"
-  read -rq || exit 1
+  echo "warning: file exists, script will overwrite..."
+  sleep 0.5
+  confirm "" || exit 1
 fi
 
 cp "${RESULT}"/nixos.img img/lima-nixos-"${ARCH}".img
