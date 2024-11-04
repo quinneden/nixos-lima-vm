@@ -14,7 +14,7 @@
     nixos-generators,
     ...
   } @ attrs:
-  # Create system-specific outputs for lima systems
+
   let
     ful = flake-utils.lib;
   in
@@ -33,7 +33,7 @@
     })
     // {
       nixosConfigurations.nixos = nixpkgs.lib.nixosSystem {
-        system = "aarch64-linux"; # doesn't play nice with each system :shrug:
+        system = "aarch64-linux";
         specialArgs = attrs;
         modules = [
           ./lima.nix
