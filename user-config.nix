@@ -1,7 +1,6 @@
 {
   config,
   modulesPath,
-  username,
   pkgs,
   lib,
   ...
@@ -20,10 +19,10 @@
 
   programs.zsh.enable = true;
 
-  users.users.${username} = {
+  users.users.nixos = {
     shell = "${pkgs.zsh}/bin/zsh";
     isNormalUser = true;
     group = "users";
-    home = "/home/${username}.linux";
+    home = "/home/nixos.linux";
   };
 }

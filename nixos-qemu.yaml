@@ -1,0 +1,31 @@
+arch: "aarch64"
+vmType: "qemu"
+
+images:
+- location: "./img/lima-nixos-aarch64.img"
+  arch: "aarch64"
+- location: "./img/lima-nixos-x86_64.img"
+  arch: "x86_64"
+
+cpus: 6
+memory: "6GiB"
+disk: "50GiB"
+
+mounts:
+- location: "~"
+  writable: true
+  9p:
+    cache: "fscache"
+- location: "/tmp/lima"
+  writable: true
+  9p:
+    cache: "fscache"
+
+mountType: "9p"
+
+ssh:
+  localPort: 0
+
+containerd:
+  system: false
+  user: false

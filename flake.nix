@@ -1,6 +1,7 @@
 {
   inputs = {
     nixpkgs.url = "nixpkgs/nixos-unstable";
+    lix-module.url = "https://git.lix.systems/lix-project/nixos-module/archive/2.91.0.tar.gz";
     flake-utils.url = "github:numtide/flake-utils";
     nixos-generators = {
       url = "github:nix-community/nixos-generators";
@@ -10,11 +11,11 @@
   outputs = {
     self,
     nixpkgs,
+    lix-module,
     flake-utils,
     nixos-generators,
     ...
   } @ attrs:
-
   let
     ful = flake-utils.lib;
   in
@@ -38,6 +39,7 @@
         modules = [
           ./lima.nix
           ./user-config.nix
+          lix-module.nixosModules.lixFromNixpkgs
         ];
       };
 

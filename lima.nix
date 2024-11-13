@@ -29,15 +29,11 @@
     sudo.wheelNeedsPassword = false;
   };
 
-  # # system mounts
-  # boot.loader.grub = {
-  #   device = "nodev";
-  #   efiSupport = true;
-  #   efiInstallAsRemovable = true;
-  # };
-
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
+  boot.loader.grub = {
+    device = "nodev";
+    efiSupport = true;
+    efiInstallAsRemovable = true;
+  };
 
   fileSystems."/boot" = {
     device = lib.mkForce "/dev/disk/by-label/ESP"; # /dev/vda1
@@ -58,4 +54,6 @@
   environment.systemPackages = with pkgs; [
     micro
   ];
+
+  system.stateVersion = "24.11";
 }

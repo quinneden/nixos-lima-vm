@@ -2,13 +2,14 @@ arch: "aarch64"
 vmType: "vz"
 
 images:
-- location: "./img/lima-nixos-aarch64.img"
+- location: "img/lima-nixos-aarch64.img"
   arch: "aarch64"
-- location: "./img/lima-nixos-x86_64.img"
+- location: "img/lima-nixos-x86_64.img"
   arch: "x86_64"
 
-cpus: 6
+cpus: 8
 memory: "6GiB"
+disk: "50GiB"
 
 mounts:
 - location: "~"
