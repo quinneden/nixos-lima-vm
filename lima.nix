@@ -4,7 +4,8 @@
   pkgs,
   lib,
   ...
-}: {
+}:
+{
   imports = [
     (modulesPath + "/profiles/qemu-guest.nix")
     ./lima-init.nix
@@ -12,7 +13,10 @@
 
   nix = {
     settings = {
-      experimental-features = ["nix-command" "flakes"];
+      experimental-features = [
+        "nix-command"
+        "flakes"
+      ];
     };
   };
 
@@ -22,7 +26,6 @@
     settings.PermitRootLogin = "yes";
   };
 
-  users.mutableUsers = true;
   users.users.root.password = "nixos";
 
   security = {
@@ -36,7 +39,7 @@
   };
 
   fileSystems."/boot" = {
-    device = lib.mkForce "/dev/disk/by-label/ESP"; # /dev/vda1
+    device = lib.mkForce "/dev/vda1";
     fsType = "vfat";
   };
 
@@ -44,7 +47,11 @@
     device = "/dev/disk/by-label/nixos";
     autoResize = true;
     fsType = "ext4";
-    options = ["noatime" "nodiratime" "discard"];
+    options = [
+      "noatime"
+      "nodiratime"
+      "discard"
+    ];
   };
 
   # misc
@@ -52,8 +59,6 @@
 
   # pkgs
   environment.systemPackages = with pkgs; [
-    micro
+    vim
   ];
-
-  system.stateVersion = "24.11";
 }

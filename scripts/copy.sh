@@ -39,4 +39,8 @@ cp "${RESULT}"/nixos.img img/lima-nixos-"${ARCH}".img
 chmod 644 img/lima-nixos-"${ARCH}".img
 echo "copied: img/lima-nixos-${ARCH}.img"
 
+if confirm "Delete result from nix store?"; then
+  nix-store --delete "$RESULT" && rm ./result
+fi
+
 unset ARCH RESULT

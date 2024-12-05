@@ -4,7 +4,9 @@
   pkgs,
   lib,
   ...
-}: let
+}:
+
+let
   LIMA_CIDATA_MNT = "/mnt/lima-cidata";
   LIMA_CIDATA_DEV = "/dev/disk/by-label/cidata";
 
@@ -20,7 +22,13 @@
         # ripped from https://github.com/lima-vm/alpine-lima/blob/main/lima-init.sh
         . "${LIMA_CIDATA_MNT}"/lima.env
 
-        export PATH=${pkgs.lib.makeBinPath [pkgs.shadow pkgs.gawk pkgs.mount]}:$PATH
+        export PATH=${
+          pkgs.lib.makeBinPath [
+            pkgs.shadow
+            pkgs.gawk
+            pkgs.mount
+          ]
+        }:$PATH
 
         # Create user
         LIMA_CIDATA_HOMEDIR="/home/$LIMA_CIDATA_USER.linux"
@@ -75,14 +83,15 @@
         cp "${LIMA_CIDATA_MNT}"/meta-data /run/lima-boot-done
         exit 0
   '';
-in {
-  imports = [];
+in
+{
+  imports = [ ];
 
   systemd.services.lima-init = {
     inherit script;
     description = "Reconfigure the system from lima-init userdata on startup";
 
-    after = ["network-pre.target"];
+    after = [ "network-pre.target" ];
 
     restartIfChanged = true;
     unitConfig.X-StopOnRemoval = false;
@@ -96,9 +105,12 @@ in {
   systemd.services.lima-guestagent = {
     enable = true;
     description = "Forward ports to the lima-hostagent";
-    wantedBy = ["multi-user.target"];
-    after = ["network.target" "lima-init.service"];
-    requires = ["lima-init.service"];
+    wantedBy = [ "multi-user.target" ];
+    after = [
+      "network.target"
+      "lima-init.service"
+    ];
+    requires = [ "lima-init.service" ];
     serviceConfig = {
       Type = "simple";
       ExecStart = "${LIMA_CIDATA_MNT}/lima-guestagent daemon";
@@ -109,7 +121,14 @@ in {
   fileSystems."${LIMA_CIDATA_MNT}" = {
     device = "${LIMA_CIDATA_DEV}";
     fsType = "auto";
-    options = ["ro" "mode=0700" "dmode=0700" "overriderockperm" "exec" "uid=0"];
+    options = [
+      "ro"
+      "mode=0700"
+      "dmode=0700"
+      "overriderockperm"
+      "exec"
+      "uid=0"
+    ];
   };
 
   environment.etc = {

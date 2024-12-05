@@ -8,8 +8,8 @@ images:
   arch: "x86_64"
 
 cpus: 8
-memory: "6GiB"
-disk: "50GiB"
+memory: "8GiB"
+disk: "100GiB"
 
 mounts:
 - location: "~"

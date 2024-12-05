@@ -7,9 +7,9 @@ images:
 - location: "./img/lima-nixos-x86_64.img"
   arch: "x86_64"
 
-cpus: 6
-memory: "6GiB"
-disk: "50GiB"
+cpus: 8
+memory: "8GiB"
+disk: "100GiB"
 
 mounts:
 - location: "~"

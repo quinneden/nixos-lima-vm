@@ -8,30 +8,41 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
-  outputs = {
-    self,
-    nixpkgs,
-    lix-module,
-    flake-utils,
-    nixos-generators,
-    ...
-  } @ attrs:
-  let
-    ful = flake-utils.lib;
-  in
-    ful.eachSystem [ful.system.x86_64-linux ful.system.aarch64-linux] (system: let
-      pkgs = import nixpkgs {inherit system;};
-    in {
-      packages = {
-        image = nixos-generators.nixosGenerate {
-          inherit pkgs;
-          modules = [
-            ./lima.nix
-          ];
-          format = "raw-efi";
-        };
-      };
-    })
+  outputs =
+    {
+      self,
+      nixpkgs,
+      lix-module,
+      flake-utils,
+      nixos-generators,
+      ...
+    }@attrs:
+    let
+      ful = flake-utils.lib;
+      user = "quinn";
+    in
+    ful.eachSystem
+      [
+        ful.system.x86_64-linux
+        ful.system.aarch64-linux
+      ]
+      (
+        system:
+        let
+          pkgs = import nixpkgs { inherit system; };
+        in
+        {
+          packages = {
+            image = nixos-generators.nixosGenerate {
+              inherit pkgs;
+              modules = [
+                ./lima.nix
+              ];
+              format = "raw-efi";
+            };
+          };
+        }
+      )
     // {
       nixosConfigurations.nixos = nixpkgs.lib.nixosSystem {
         system = "aarch64-linux";
@@ -39,12 +50,14 @@
         modules = [
           ./lima.nix
           ./user-config.nix
-          lix-module.nixosModules.lixFromNixpkgs
+          lix-module.nixosModules.default
         ];
       };
 
       nixosModules.lima = {
-        imports = [./lima.nix];
+        imports = [ ./lima.nix ];
       };
+
+      formatter.aarch64-darwin = nixpkgs.legacyPackages.aarch64-darwin.nixfmt-rfc-style;
     };
 }
